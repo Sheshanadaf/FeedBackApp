@@ -5,6 +5,7 @@ const passport = require("passport");
 const bodyParser = require('body-parser');
 const keys = require('./config/keys');
 require("./models/user");
+require("./models/Survey");
 require("./services/passport");
 
 
@@ -26,6 +27,7 @@ app.use(passport.session());
 
 require('./routes/authRoutes')(app);
 require('./routes/billingRoutes')(app);
+require('./routes/surveyRoutes')(app);
 
 if (process.env.NODE_ENV === 'production'){
     // Express wll serve up production assets
@@ -36,9 +38,8 @@ if (process.env.NODE_ENV === 'production'){
     // if it doesn't recognize the route
     const path = require('path');
     app.get('*', (req, res) => {
-        res.sendFile(path,reslove(__dirname, 'client', 'build', 'index.html'));
+        res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
-
 }
 
 const PORT = process.env.PORT || 7000 ;
